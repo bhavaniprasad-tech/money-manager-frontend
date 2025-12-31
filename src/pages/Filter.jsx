@@ -6,6 +6,7 @@ import axiosConfig from "../util/axiosConfig";
 import { API_ENDPOINTS } from "../util/apiEndpoints";
 import TransactionInfoCard from "../components/TransactionInfoCard";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 const Filter = () => {
     useUser();
@@ -59,7 +60,7 @@ const Filter = () => {
                         </div>
                         <div>
                             <label htmlFor="startdate" className="block text-sm font-medium mb-1">Start date</label>
-                            <input value={startDate} id="startdate" type="date" className="w-full border rounded px-3 py-2" onChange={e => setEndDate(e.target.value)} />
+                            <input value={startDate} id="startdate" type="date" className="w-full border rounded px-3 py-2" onChange={e => setStartDate(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="enddate" className="block text-sm font-medium mb-1">End date</label>
@@ -85,14 +86,14 @@ const Filter = () => {
                                 <label htmlFor="keyword" className="block text-sm font-medium mb-1">Search</label>
                                 <input value={keyword} id="keyword" type="text" placeholder="Search..." className="w-full border rounded px-2 py-2" onChange={e => setKeyword(e.target.value)}/>
                             </div>
-                            <button onClick={handleSearch} className="ml-2 mb-1 p-2 bg-purple-800 hover:bg-purple-900 text-white rounded flex items-center justify-center cursor-pointer">
+                            <button type="button" onClick={handleSearch} className="ml-2 mb-1 p-2 bg-purple-800 hover:bg-purple-900 text-white rounded flex items-center justify-center cursor-pointer">
                                 <Search size={20}/>
                             </button>
                         </div>
                     </form>
                 </div>
-                <div className="card-p-4">
-                    <div className="flex items-center justofy-between mb-4">
+                <div className="card p-4">
+                    <div className="flex items-center justify-between mb-4">
                         <h5 className="text-lg font-semibold">Transactions</h5>
                     </div>
                     {transactions.length === 0 && !loading? (
@@ -101,12 +102,12 @@ const Filter = () => {
                     {loading ? (
                         <p className="text-gray-500">Loading Transactions</p>
                     ):("")}
-                    {transactions.map((transaction) => (
+                    {transactions && transactions.length > 0 && transactions.map((transaction) => (
                         <TransactionInfoCard
                         key={transaction.id}
                         title={transaction.name}
                         icon={transaction.icon}
-                        date={moment(transaction.data).format('Do MM YYY')}
+                        date={moment(transaction.date || transaction.createdAt || transaction.txnDate).format('Do MMM YYYY')}
                         amount={transaction.amount}
                         type={type}
                         hideDeleteBtn
