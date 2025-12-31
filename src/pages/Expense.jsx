@@ -47,7 +47,16 @@ const Expense = () => {
         try{
             const response = await axiosConfig.get(API_ENDPOINTS.CATEGORY_BY_TYPE("expense"));
             if(response.status === 200){
-                setCategories(response.data);
+                const raw = response.data;
+                const normalized = Array.isArray(raw)
+                    ? raw.map((c) => ({
+                        id: c.id ?? c._id ?? c.categoryId ?? c.category_id,
+                        name: c.name ?? c.categoryName ?? c.label ?? c.category ?? "",
+                        icon: c.icon ?? c.image ?? c.iconUrl ?? "",
+                        type: c.type ?? c.categoryType ?? "expense",
+                    }))
+                    : [];
+                setCategories(normalized);
             }
         }catch(error){
             console.log('failed to fetch expense categories :',error);

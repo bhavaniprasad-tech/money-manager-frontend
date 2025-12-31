@@ -6,6 +6,7 @@ import Category from './pages/Category';
 import Income from './pages/Income';
 import Expense from './pages/Expense';
 import Filter from './pages/Filter';
+import Landing from './pages/Landing';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
       <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Root />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
