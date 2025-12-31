@@ -2,7 +2,7 @@ import Dashboard from "../components/Dashboard";
 import { useUser } from "../hooks/useUser";
 import { Coins, Wallet, WalletCards } from "lucide-react";
 import { addThousandsSeparator } from "../util/util";
-import InfoCard from "../components/infoCard";
+import InfoCard from "../components/InfoCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
