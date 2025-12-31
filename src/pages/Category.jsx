@@ -26,8 +26,16 @@ const Category = () => {
         try{
             const response = await axiosConfig.get(API_ENDPOINTS.GET_ALL_CATEGORIES);
             if(response.status === 200){
-                console.log('categories',response.data)
-                setCategoryData(response.data);
+                // Normalize category objects to ensure `name` field is present
+                const raw = response.data;
+                console.log('categories', raw);
+                const normalized = Array.isArray(raw)
+                    ? raw.map((c) => ({
+                        ...c,
+                        name: c.name ?? c.categoryName ?? c.label ?? "",
+                    }))
+                    : [];
+                setCategoryData(normalized);
             }
         }catch(error){
             console.error('Something went wrong please try again', error)
