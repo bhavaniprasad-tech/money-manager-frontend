@@ -44,26 +44,37 @@ const Income = () => {
 
     //fetch categories for an income
     const fetchIncomeCategories = async () => {
-        try{
-            const response = await axiosConfig.get(API_ENDPOINTS.CATEGORY_BY_TYPE("income"));
-            if(response.status === 200){
-                const raw = response.data;
-                console.log('income categories', raw);
-                const normalized = Array.isArray(raw)
-                    ? raw.map((c) => ({
-                        id: c.id ?? c._id ?? c.categoryId ?? c.category_id,
-                        name: c.name ?? c.categoryName ?? c.label ?? c.category ?? "",
-                        icon: c.icon ?? c.image ?? c.iconUrl ?? "",
-                        type: c.type ?? c.categoryType ?? "income",
-                    }))
-                    : [];
-                setCategories(normalized);
+    try {
+        const response = await axiosConfig.get(
+            API_ENDPOINTS.GET_ALL_CATEGORIES,
+            {
+                params: { type: "income" }
             }
-        }catch(error){
-            console.log('failed to fetch income categories :',error);
-            toast.error(error.data?.message || "Failed to fetch income categories")
+        );
+
+        if (response.status === 200) {
+            const raw = response.data;
+            console.log("income categories", raw);
+
+            const normalized = Array.isArray(raw)
+                ? raw.map((c) => ({
+                    id: c.id ?? c._id ?? c.categoryId ?? c.category_id,
+                    name: c.name ?? c.categoryName ?? c.label ?? c.category ?? "",
+                    icon: c.icon ?? c.image ?? c.iconUrl ?? "",
+                    type: c.type ?? c.categoryType ?? "income",
+                }))
+                : [];
+
+            setCategories(normalized);
         }
+    } catch (error) {
+        console.log("failed to fetch income categories:", error);
+        toast.error(
+            error.response?.data?.message || "Failed to fetch income categories"
+        );
     }
+};
+
 
     const handleAddIncome = async (income) => {
         const {name, amount, date, icon, categoryId} = income;
