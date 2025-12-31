@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #fcfbfc;
+  overflow-x: hidden;
+}
+
+/* Ensure react-hot-toast toasts render above modals */
+.react-hot-toast, .react-hot-toast__toast-container, .react-hot-toast__toast {
+  z-index: 99999 !important;
+}
