@@ -1,4 +1,4 @@
-export const BASE_URL = "https://money-manager-3cqh.onrender.com/api/v1.0";
+export const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 //export const BASE_URL = "http://localhost:8081/api/v1.0";
 const  CLOUDINARY_CLOUD_NAME = "dgi75nok1"
 export const API_ENDPOINTS = {
